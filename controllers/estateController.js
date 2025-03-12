@@ -1,7 +1,7 @@
 import express from 'express';
 import { errorResponse, successResponse } from '../utils/responseUtils.js';
 import { getQueryAttributes, getQueryLimit, getQueryOrder } from '../utils/apiUtils.js';
-import { cityModel, energyLabelModel, estateImageRelModel, imageModel, estateModel as model, typeModel } from '../models/index.js';
+import { estateModel as model, cityModel, energyLabelModel, estateImageRelModel, imageModel, typeModel } from '../models/index.js';
 
 export const estateController = express.Router();
 // Base-URL for alle ruter i denne controller
@@ -11,21 +11,30 @@ const url = 'estates';
 estateController.get(`/${url}`, async (req, res) => {
     try {
         // Henter liste af records fra modellen
-        const list = await model.findAll({
-            attributes: getQueryAttributes(req.query, 'id, address, price'),
+        let list = await model.findAll({
+            attributes: getQueryAttributes(req.query, 'id, address, price, num_rooms, floor_space'),
             limit: getQueryLimit(req.query),
             order: getQueryOrder(req.query),
             include: [{
                 model: cityModel,
                 attributes: ['name', 'zipcode']
             }, {
+                model: typeModel,
+                attributes: ['name']
+            }, {
+                model: energyLabelModel,
+                attributes: ['name']
+            }, {
                 model: imageModel,
-                attributes: ['filename']
+                as: 'images',
+                attributes: ['filename', 'author', 'description'],
+                through: { attributes: [] }
             }]
         });
         if (!list || list.length === 0) {
             return errorResponse(res, `No records found`, 404); // Returnerer fejl hvis ingen poster findes
         }
+
         successResponse(res, list); // Returnerer succesrespons med listen
     } catch (error) {
         errorResponse(res, `Error fetching records: ${error.message}`); // Håndterer fejl
