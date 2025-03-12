@@ -1,7 +1,7 @@
 import express from 'express';
 import dbConfig from '../config/dbConfig.js';
 import { seedFromCsv } from '../utils/seedUtils.js';
-import { userModel, exampleModel } from '../models/index.js';
+import { userModel, estateModel, cityModel, typeModel, imageModel, estateImageRelModel, staffModel, reviewModel, favoriteModel, energyLabelModel } from '../models/index.js';
 import { errorResponse, successResponse } from '../utils/responseUtils.js';
 
 export const dbController = express.Router();
@@ -33,7 +33,15 @@ dbController.get('/seedfromcsv', async (req, res) => {
 		// Array med seed filer og models
 		const files_to_seed = [
 			{ file: 'user.csv', model: userModel },
-			{ file: 'example.csv', model: exampleModel }
+			{ file: 'city.csv', model: cityModel },
+			{ file: 'energy-label.csv', model: energyLabelModel },
+			{ file: 'estate-type.csv', model: typeModel },
+			{ file: 'estate.csv', model: estateModel },
+			{ file: 'favorite.csv', model: favoriteModel },
+			{ file: 'image.csv', model: imageModel },
+			{ file: 'review.csv', model: reviewModel },
+			{ file: 'staff.csv', model: staffModel },
+			{ file: 'estate-image-rel.csv', model: estateImageRelModel },
 		]
 		// Array til svar
 		const files_seeded = []

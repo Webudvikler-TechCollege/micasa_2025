@@ -3,7 +3,11 @@ import cors from 'cors'
 import { dbController } from './Controllers/dbController.js'
 import { userController } from './controllers/userController.js'
 import { authController } from './controllers/authController.js'
-import { exampleController } from './controllers/exampleController.js'
+import { cityController } from './controllers/cityController.js'
+import { reviewController } from './controllers/reviewController.js'
+import { estateController } from './controllers/estateController.js'
+import { favoriteController } from './controllers/favoriteController.js'
+import { staffController } from './controllers/staffController.js'
 
 // Express Route Settings
 const app = express()
@@ -18,7 +22,11 @@ app.get('/', (req, res) => {
 
 // Use controllers
 app.use(
-    exampleController,
+    estateController,
+    cityController,
+    reviewController,
+    favoriteController,
+    staffController,
     userController,
     authController,
     dbController
