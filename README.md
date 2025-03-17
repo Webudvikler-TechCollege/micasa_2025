@@ -8,7 +8,7 @@ Controllerne håndterer routes til de specifikke endpoint men overordnede routes
 
 ## Postman
 Der ligger en Postman dokumentation på nedenstående link som giver et overblik over de forskellige endpoints i API'et og kan fungere som en template:
-https://documenter.getpostman.com/view/6540576/2sAYXEEyBu
+https://documenter.getpostman.com/view/6540576/2sAYkAR3a4
 
 ## Database
 Du skal selv oprette en database og indtaste dine bruger oplysninger til din denne i filen `.env`.
