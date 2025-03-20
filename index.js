@@ -1,5 +1,7 @@
 import express from 'express'
 import cors from 'cors'
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { dbController } from './Controllers/dbController.js'
 import { userController } from './controllers/userController.js'
 import { authController } from './controllers/authController.js'
@@ -14,6 +16,13 @@ const app = express()
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors())
+
+// Fix for __dirname in ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve static files from 'assets' folder (Change if needed)
+app.use('/images', express.static(path.join(__dirname, 'assets/images')));
 
 // Route for root
 app.get('/', (req, res) => {
